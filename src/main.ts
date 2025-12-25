@@ -31,7 +31,6 @@ for (const w of [...tier1, ...tier2, ...tier3]) {
 }
 
 const footer = document.createElement('footer')
-const author = document.createElement('div')
 const input = document.createElement('input')
 input.setAttribute('type', 'text')
 input.setAttribute('placeholder', '작성자')
