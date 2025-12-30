@@ -60,19 +60,6 @@ body {
   height: 100dvh;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 .info {
   position: fixed;
   display: flex;
@@ -124,16 +111,20 @@ body {
   padding-block: calc(1.2 * var(--u));
   cursor: pointer;
   opacity: 0.6;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
   transition:
     color 0.3s cubic-bezier(0.19, 1, 0.22, 1),
     opacity 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.word:hover {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .word:hover {
+    opacity: 1;
+  }
 }
-
-.word[data-selected] {
+.selected {
   opacity: 1;
 }
 
@@ -247,4 +238,16 @@ p {
   color: white;
   z-index: 100;
   font-size: 0.85rem;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }

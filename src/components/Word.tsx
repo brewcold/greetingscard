@@ -11,9 +11,10 @@ type WordProps = {
 } & ComponentProps<'span'>
 
 export function Word({ theme, hide, selected, excluded, onClick, children, ...props }: WordProps) {
+  const className = `word ${excluded ? 'excluded' : ''} ${selected ? 'selected' : ''}`
   if (hide) return null
   return (
-    <span style={theme} class={`word ${excluded ? 'excluded' : ''}`} data-selected={selected ? 'true' : undefined} onClick={onClick} {...props}>
+    <span style={theme} class={className} onClick={onClick} {...props}>
       {children}
     </span>
   )
