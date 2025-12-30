@@ -1,5 +1,6 @@
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
+import { colors } from './colors'
 
 export async function saveCard() {
   const card = document.querySelector<HTMLElement>('#card')
@@ -10,8 +11,15 @@ export async function saveCard() {
 
   if (document.fonts?.ready) await document.fonts.ready
 
+  const color = JSON.parse(
+    sessionStorage.getItem('greetingscard2026-color-theme') ||
+      JSON.stringify({
+        ...colors[0],
+      }),
+  ) as (typeof colors)[number]
+
   const canvas = await html2canvas(card, {
-    backgroundColor: '#242424',
+    backgroundColor: color.backgroundColor,
     scale: Math.min(2, window.devicePixelRatio || 1),
     useCORS: true,
   })
