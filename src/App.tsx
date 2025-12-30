@@ -1,16 +1,13 @@
-import { useContext, useState } from 'preact/hooks'
+import { useContext } from 'preact/hooks'
 import { Word } from './components/Word'
-import { ThemeContext, WordsContext, WritingStatusContext } from './components/Providers'
+import { EditorContext, ThemeContext, WordsContext, WritingStatusContext } from './components/Providers'
 import { Controller } from './components/Controller'
 
 export function App() {
   const { tier1, tier2, tier3, tier4 } = useContext(WordsContext)
   const { status, saving } = useContext(WritingStatusContext)
   const { theme: color } = useContext(ThemeContext)
-
-  const [selected, setSelected] = useState<Set<string>>(() => new Set())
-  const [username, setUsername] = useState('')
-  const [chosenTier4, setChosenTier4] = useState<string | null>(null)
+  const { selected, setSelected, username, setUsername, chosenTier4, setChosenTier4 } = useContext(EditorContext)
 
   const handleChooseWord = (w: string) => {
     if (status === 'editing')

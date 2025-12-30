@@ -1,21 +1,25 @@
 import { useContext, useState } from 'preact/hooks'
 import { saveCard } from '../utils/pdf'
 import { waitTwoFrames } from '../utils/waitFrame'
-import { WritingStatusContext, ThemeContext } from './Providers'
+import { WritingStatusContext, ThemeContext, EditorContext } from './Providers'
 import { InfoCircledIcon, LoopIcon } from '@radix-ui/react-icons'
 import { Info } from './Info'
 
 export function Controller() {
   const { status, saving, setStatus, setSaving } = useContext(WritingStatusContext)
   const { theme: color, layoutSize, refresh } = useContext(ThemeContext)
+  const { selected, username, chosenTier4 } = useContext(EditorContext)
   const { w, h } = layoutSize
   const [displayInfo, setDisplayInfo] = useState(false)
 
   const onMain = async () => {
     if (status === 'editing') {
+      if (selected.size === 0) return
       setStatus('completed')
     }
     if (status === 'completed') {
+      if (username.length < 1) return
+      if (chosenTier4 === null || chosenTier4.length === 0) return
       setSaving(true)
       try {
         await waitTwoFrames()
