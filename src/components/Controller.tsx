@@ -4,6 +4,8 @@ import { waitTwoFrames } from '../utils/waitFrame'
 import { WritingStatusContext, ThemeContext, EditorContext } from './Providers'
 import { InfoCircledIcon, LoopIcon } from '@radix-ui/react-icons'
 import { Info } from './Info'
+import { overlay } from 'overlay-kit'
+import { Alert } from './Alert'
 
 export function Controller() {
   const { status, saving, setStatus, setSaving } = useContext(WritingStatusContext)
@@ -12,15 +14,21 @@ export function Controller() {
   const { w, h } = layoutSize
   const [displayInfo, setDisplayInfo] = useState(false)
 
+  const alert = (msg: string) =>
+    overlay.open(({ isOpen, close }: { isOpen: boolean; close: () => void; unmount: () => void }) => (
+      <Alert open={isOpen} onClose={close} msg={msg} />
+    ))
+
   const onMain = async () => {
     if (status === 'editing') {
-      if (selected.size === 0) return
+      if (selected.size === 0) return alert('하나 이상의 말을 선택하세요')
       setStatus('completed')
     }
     if (status === 'completed') {
-      if (username.length < 1) return
-      if (chosenTier4 === null || chosenTier4.length === 0) return
+      if (username.length < 1) return alert('작성자 이름을 입력하세요')
+      if (chosenTier4 === null || chosenTier4.length === 0) return alert('맺음말을 완성해 주세요')
       setSaving(true)
+      alert('카드를 저장하는 중입니다...')
       try {
         await waitTwoFrames()
         await document.fonts?.ready
@@ -28,6 +36,7 @@ export function Controller() {
       } finally {
         setStatus('finished')
         setSaving(false)
+        alert('카드를 저장했어요')
       }
     }
     if (status === 'finished') {
@@ -35,7 +44,7 @@ export function Controller() {
     }
   }
 
-  const buttonText = status === 'editing' ? '작성하기' : status === 'completed' ? '저장' : '다시 작성'
+  const buttonText = status === 'editing' ? '작성' : status === 'completed' ? '카드 저장' : '다시 작성'
 
   return (
     <>

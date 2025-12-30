@@ -26,7 +26,6 @@ export function App() {
 
   return (
     <div class="frame" style={color}>
-      <div class={`${saving ? 'loading' : ''}`} />
       <div id="card" class="container">
         <div class="words">
           {[...tier1, ...tier2, ...tier3].map(w => {

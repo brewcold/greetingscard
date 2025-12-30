@@ -73,20 +73,6 @@ body {
   }
 }
 
-.loading {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100dvw;
-  height: 100dvh;
-  inset: 0;
-  z-index: 9;
-  color: white;
-  font-size: clamp(16px, calc(4.8 * var(--u)), 48px);
-  background-color: rgba(0, 0, 0, 0.85);
-}
-
 .info {
   position: fixed;
   display: flex;
@@ -245,4 +231,20 @@ footer {
 h1,
 p {
   cursor: default;
+}
+
+.overlay {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  width: 100dvw;
+  height: 1.5rem;
+  background-color: rgba(0, 0, 0, 1);
+  color: white;
+  z-index: 100;
+  font-size: 0.85rem;
 }
