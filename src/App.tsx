@@ -1,6 +1,5 @@
 import { useContext, useState } from 'preact/hooks'
 import { Word } from './components/Word'
-
 import { ThemeContext, WordsContext, WritingStatusContext } from './components/Providers'
 import { Controller } from './components/Controller'
 
@@ -22,21 +21,18 @@ export function App() {
       })
   }
 
+  const showT4 = status === 'completed' && !saving
   const handleT4Word = (w: string) => {
     if (status !== 'completed') return
     setChosenTier4(w)
   }
-
-  const words = [...tier1, ...tier2, ...tier3]
-
-  const showEditor = status === 'completed' && !saving
 
   return (
     <div class="frame" style={color}>
       <div class={`${saving ? 'loading' : ''}`} />
       <div id="card" class="container">
         <div class="words">
-          {words.map(w => {
+          {[...tier1, ...tier2, ...tier3].map(w => {
             const isSelected = selected.has(w)
             const excluded = status !== 'editing' && !isSelected
             return (
@@ -50,7 +46,7 @@ export function App() {
         <footer>
           {status !== 'editing' && (
             <div class="tier4">
-              {showEditor ? (
+              {showT4 ? (
                 <input
                   class="username"
                   style={color}
