@@ -1,22 +1,19 @@
-import { useMemo, useState } from 'preact/hooks'
+import { useContext, useState } from 'preact/hooks'
 import { Word } from './components/Word'
-import { saveCard } from './utils/pdf'
-import { loadWords } from './utils/words'
-import { waitTwoFrames } from './utils/waitFrame'
-import { Info } from './components/Info'
 
-type Status = 'editing' | 'completed' | 'finished'
+import { ThemeContext, WordsContext, WritingStatusContext } from './components/Providers'
+import { Controller } from './components/Controller'
 
 export function App() {
-  const { tier1, tier2, tier3, tier4 } = useMemo(() => loadWords(), [])
+  const { tier1, tier2, tier3, tier4 } = useContext(WordsContext)
+  const { status, saving } = useContext(WritingStatusContext)
+  const { theme: color } = useContext(ThemeContext)
+
   const [selected, setSelected] = useState<Set<string>>(() => new Set())
-  const [status, setStatus] = useState<Status>('editing')
   const [username, setUsername] = useState('')
   const [chosenTier4, setChosenTier4] = useState<string | null>(null)
-  const [saving, setSaving] = useState(false)
-  const [displayInfo, setDisplayInfo] = useState(false)
 
-  const toggle = (w: string) => {
+  const handleChooseWord = (w: string) => {
     if (status === 'editing')
       setSelected(prev => {
         const next = new Set(prev)
@@ -25,39 +22,17 @@ export function App() {
       })
   }
 
-  const onTier4 = (w: string) => {
+  const handleT4Word = (w: string) => {
     if (status !== 'completed') return
     setChosenTier4(w)
   }
-
-  const onMain = async () => {
-    if (status === 'editing') {
-      setStatus('completed')
-    }
-    if (status === 'completed') {
-      setSaving(true)
-      await waitTwoFrames()
-      await document.fonts?.ready
-      try {
-        await saveCard()
-      } finally {
-        setStatus('finished')
-        setSaving(false)
-      }
-    }
-    if (status === 'finished') {
-      window.location.reload()
-    }
-  }
-
-  const buttonText = status === 'editing' ? '완성하기' : status === 'completed' ? '저장하기' : '다시 쓰기'
 
   const words = [...tier1, ...tier2, ...tier3]
 
   const showEditor = status === 'completed' && !saving
 
   return (
-    <>
+    <div class="frame" style={color}>
       <div class={`${saving ? 'loading' : ''}`} />
       <div id="card" class="container">
         <div class="words">
@@ -65,7 +40,7 @@ export function App() {
             const isSelected = selected.has(w)
             const excluded = status !== 'editing' && !isSelected
             return (
-              <Word excluded={excluded} selected={isSelected ? true : undefined} onClick={() => toggle(w)}>
+              <Word theme={color} excluded={excluded} selected={isSelected ? true : undefined} onClick={() => handleChooseWord(w)}>
                 {w}
               </Word>
             )
@@ -76,9 +51,16 @@ export function App() {
           {status !== 'editing' && (
             <div class="tier4">
               {showEditor ? (
-                <input class="username" value={username} placeholder="작성자" onInput={(e: any) => setUsername(e.currentTarget.value)} autoFocus />
+                <input
+                  class="username"
+                  style={color}
+                  value={username}
+                  placeholder="작성자"
+                  onInput={(e: any) => setUsername(e.currentTarget.value)}
+                  autoFocus
+                />
               ) : (
-                <Word excluded={!username} selected>
+                <Word theme={color} excluded={!username} selected>
                   {username || '작성자'}
                 </Word>
               )}
@@ -87,7 +69,7 @@ export function App() {
                 const isChosen = chosenTier4 === w
                 const hidden = (chosenTier4 && !isChosen) || undefined
                 return (
-                  <Word hide={hidden} excluded={hidden} selected={isChosen} onClick={() => onTier4(w)}>
+                  <Word hide={hidden} excluded={hidden} selected={isChosen} onClick={() => handleT4Word(w)}>
                     {w}
                   </Word>
                 )
@@ -96,15 +78,7 @@ export function App() {
           )}
         </footer>
       </div>
-
-      <button class="complete-btn" type="button" onClick={onMain} disabled={saving}>
-        {buttonText}
-      </button>
-
-      <button class="info-btn" type="button" onClick={() => setDisplayInfo(prev => !prev)} disabled={saving}>
-        ?
-      </button>
-      {displayInfo ? <Info setState={setDisplayInfo} /> : null}
-    </>
+      <Controller />
+    </div>
   )
 }
