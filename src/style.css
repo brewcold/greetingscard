@@ -105,13 +105,13 @@ body {
 
 .info-txt {
   width: 100%;
-  max-width: 80%;
+  max-width: 40rem;
   text-align: left;
-  padding-inline: 2rem;
+  padding-inline: 1rem;
   line-height: 1.5;
   margin: 0.25rem;
-  font-size: 0.95rem;
-  font-weight: 400;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .container {
