@@ -264,8 +264,10 @@ a {
   left: 0;
   width: 100dvw;
   height: 100dvh;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: rgba(0, 0, 0, 0.75);
   color: white;
   z-index: 100;
-  font-size: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
 }

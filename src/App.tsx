@@ -8,7 +8,12 @@ import { overlay } from 'overlay-kit'
 export function App() {
   useEffect(() => {
     if (isKakaoInApp()) {
-      overlay.open(() => <div class="kakao-overlay">카카오톡 내장 브라우저에서는 정상적으로 작동하지 않습니다. 다른 브라우저를 이용해 주세요.</div>)
+      overlay.open(() => (
+        <div class="kakao-overlay">
+          <span>카카오톡 내장 브라우저에서는 정상적으로 작동하지 않습니다.</span>
+          <span>다른 브라우저를 이용해 주세요.</span>
+        </div>
+      ))
     }
   }, [])
 
