@@ -87,6 +87,33 @@ body {
   background-color: rgba(0, 0, 0, 0.85);
 }
 
+.info {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100dvw;
+  height: 100dvh;
+  text-align: center;
+  inset: 0;
+  z-index: 9;
+  color: white;
+  font-size: clamp(16px, calc(4.8 * var(--u)), 48px);
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.info-txt {
+  width: 100%;
+  max-width: 80%;
+  text-align: left;
+  padding-inline: 2rem;
+  line-height: 1.5;
+  margin: 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
 .container {
   width: var(--card-w);
   height: var(--card-h);
