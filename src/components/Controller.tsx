@@ -68,7 +68,13 @@ export function Controller() {
             default:
               return (
                 <>
-                  <button style={{ color: color.color }} class="complete-btn" type="button" onClick={() => onMain(true)} disabled={saving}>
+                  <button
+                    aria-label={status === 'completed' ? '본문 편집하기' : '작성자 편집하기'}
+                    style={{ color: color.color }}
+                    class="complete-btn"
+                    type="button"
+                    onClick={() => onMain(true)}
+                    disabled={saving}>
                     뒤로
                   </button>
                   <button style={{ color: color.color }} class="complete-btn" type="button" onClick={() => onMain()} disabled={saving}>
@@ -80,6 +86,7 @@ export function Controller() {
         })()}
       </div>
       <button
+        aria-label="색상 변경"
         style={{ color: color.color, border: `1.5px dotted ${color.color}` }}
         class="change-btn"
         type="button"
@@ -88,6 +95,7 @@ export function Controller() {
         <LoopIcon width="1.1rem" height="1.1rem" />
       </button>
       <button
+        aria-label="사이트 정보 보기"
         style={{ color: displayInfo ? '#fff' : color.color, border: `1.5px dotted ${displayInfo ? '#fff' : color.color}` }}
         class="info-btn"
         type="button"

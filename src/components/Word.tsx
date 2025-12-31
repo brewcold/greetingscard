@@ -11,10 +11,10 @@ type WordProps = {
 } & ComponentProps<'button'>
 
 export function Word({ theme, hide, selected, excluded, onClick, children, ...props }: WordProps) {
-  const className = `word ${excluded ? 'excluded' : ''} ${selected ? 'selected' : ''}`
+  const className = `word ${excluded ? 'excluded' : ''}`
   if (hide) return null
   return (
-    <button style={theme} class={className} onClick={onClick} {...props}>
+    <button aria-pressed={selected} style={theme} class={className} onClick={onClick} {...props}>
       {children}
     </button>
   )
