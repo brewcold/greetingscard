@@ -1,6 +1,7 @@
 import type { SetStateAction } from 'preact/compat'
 import { useMemo, type Dispatch } from 'preact/hooks'
 import desc from '../assets/docs/desc.txt?raw'
+import img from '../assets/logo.svg'
 
 export function Info({ setState }: { setState: Dispatch<SetStateAction<boolean>> }) {
   const txt = useMemo(() => desc.split('\n'), [])
@@ -14,6 +15,7 @@ export function Info({ setState }: { setState: Dispatch<SetStateAction<boolean>>
           </p>
         ))}
       </>
+      <img src={img} alt="hoi logo" class="logo" />
     </div>
   )
 }
