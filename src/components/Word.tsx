@@ -8,14 +8,14 @@ type WordProps = {
   excluded?: boolean
   hide?: boolean
   onClick?: () => void
-} & ComponentProps<'span'>
+} & ComponentProps<'button'>
 
 export function Word({ theme, hide, selected, excluded, onClick, children, ...props }: WordProps) {
   const className = `word ${excluded ? 'excluded' : ''} ${selected ? 'selected' : ''}`
   if (hide) return null
   return (
-    <span style={theme} class={className} onClick={onClick} {...props}>
+    <button style={theme} class={className} onClick={onClick} {...props}>
       {children}
-    </span>
+    </button>
   )
 }

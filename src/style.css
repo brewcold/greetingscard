@@ -119,12 +119,17 @@ body {
 
 .word {
   display: inline-block;
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: var(--weight);
+  background-color: transparent;
+  margin: 0;
   font-size: clamp(16px, calc(4.8 * var(--u)), 48px);
   letter-spacing: clamp(-1px, calc(-0.35 * var(--u)), -2px);
   padding-inline: calc(0.75 * var(--u));
   padding-block: calc(1.2 * var(--u));
   cursor: pointer;
   opacity: 0.6;
+  border: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   touch-action: manipulation;
